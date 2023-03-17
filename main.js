@@ -4,7 +4,7 @@ const GithubUserCard = {
   props: ['username'],
   data(){
     return {
-      userObj: null,
+      userObj: {},
     }
   },
   created(){
@@ -14,33 +14,29 @@ const GithubUserCard = {
     .then((response) => response.json())
     .then((json) => {
       this.userObj = json
-      console.log('Antes:', this.userObj)
     })
-  },
-  mounted(){
-    console.log('Depois:',this.userObj)
   },
   template: `
   <div class="ui card">
-        <div class="image">
-          <img :src="userObj.avatar_url">
-        </div>
-        <div class="content">
-          <a class="header">{{userObj.login}}</a>
-          <div class="meta">
-            <span class="date">Joined in {{userObj.created_at}}</span>
-          </div>
-          <div class="description">
-            {{userObj.bio}}
-          </div>
-        </div>
-        <div class="extra content">
-          <a>
-            <i class="user icon"></i>
-            {{userObj.followers}} Friends
-          </a>
-        </div>
-      </div> 
+    <div class="image">
+      <img :src="userObj.avatar_url">
+    </div>
+    <div class="content">
+      <a class="header" :href = "userObj.html_url" target = "blank">{{userObj.name}}</a>
+      <div class="meta">
+        <span class="date">Joined in {{userObj.created_at}}</span>
+      </div>
+      <div class="description">
+        {{userObj.bio}}
+      </div>
+    </div>
+    <div class="extra content">
+      <a :href = "userObj.followers_url" target = "blank">
+        <i class="user icon"></i>
+        {{userObj.followers}} Friends
+      </a>
+    </div>
+  </div> 
   `,
 }
 
